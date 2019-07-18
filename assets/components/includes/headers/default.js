@@ -5,10 +5,10 @@ const DefaultHeader = () => (
     <h2>Header</h2>
     <ul>
       <li>
-        <Link href="/">Home</Link>
+        <Link href="/"><a>Home</a></Link>
       </li>
       <li>
-        <Link href="/listings">Listings</Link>
+        <Link href="/listings"><a>Listings</a></Link>
       </li>
     </ul>
 
