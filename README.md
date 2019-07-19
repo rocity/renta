@@ -12,6 +12,12 @@ Rent app with Next.js and DRF
 $ pipenv install
 ```
 
+#### Install migrations
+
+```bash
+$ pipenv run python renta/manage.py migrate
+```
+
 #### Run the development server
 
 ```bash
