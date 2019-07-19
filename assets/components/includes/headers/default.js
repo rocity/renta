@@ -11,7 +11,7 @@ const DefaultHeader = () => (
         <Link href="/listings"><a>Listings</a></Link>
       </li>
       <li>
-        <Link href="/auth/signin" as='/signin'><a>Sign In</a></Link>
+        <Link href="/auth/signin"><a>Sign In</a></Link>
       </li>
     </ul>
 

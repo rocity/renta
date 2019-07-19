@@ -3,7 +3,10 @@ import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 
-export const login = async ({token}) => {
+export const signin = async ({token}) => {
+  // Append token prefix
+  token = `Token ${token}`;
+
   cookie.set('token', token, {expires: 1});
   Router.push('/profile');
 };
@@ -11,7 +14,7 @@ export const login = async ({token}) => {
 export const signout = () => {
   cookie.remove('token');
   window.localStorage.setItem('signout', Date.now())
-  Router.push('/signin');
+  Router.push('/auth/signin');
 };
 
 const getDisplayName = Component => Component.getDisplayName || Component.name || 'Component'
@@ -46,7 +49,7 @@ export const withAuthSync = WrappedComponent => (
 
     syncSignout(e) {
       if (e.key === 'signout') {
-        Router.push('/signin');
+        Router.push('/auth/signin');
       }
     }
 
@@ -62,13 +65,13 @@ export const auth = ctx => {
 
   if (ctx.req && !token) {
     // Request is present but token isn't means the user is not logged in.
-    ctx.res.writeHead(302, {Location: '/signin'});
+    ctx.res.writeHead(302, {Location: '/auth/signin'});
     ctx.res.end();
     return;
   }
 
   if (!token) {
-    Router.push('/signin');
+    Router.push('/auth/signin');
   }
 
   return token;
