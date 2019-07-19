@@ -10,13 +10,30 @@ class Signin extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {username: '', password: '', error: ''};
+    this.state = {
+      form: {
+        username: {value: ''},
+        password: {value: ''}
+      },
+      error: ''
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
-    this.setState({username: e.target.value});
+    const name = e.target.name;
+    const value = e.target.value;
+
+    this.setState({
+      form: {
+        ...this.state.form,
+        [name]: {
+          ...this.state.form[name],
+          value
+        }
+      }
+    });
   }
 
   async handleSubmit(e) {
@@ -34,11 +51,21 @@ class Signin extends Component {
         <form onSubmit={this.handleSubmit}>
           <fieldset>
             <label htmlFor="username">Username</label>
-            <input type="text" name="username" id="username" />
+            <input
+              type="text"
+              name="username"
+              id="username"
+              value={this.state.form.username.value}
+              onChange={this.handleChange} />
           </fieldset>
           <fieldset>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={this.state.form.password.value}
+              onChange={this.handleChange} />
           </fieldset>
           <fieldset>
             <button type="submit">Sign In</button>
