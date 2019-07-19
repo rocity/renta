@@ -37,10 +37,13 @@ THIRD_PARTY_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 PROJECT_APPS = [
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + PROJECT_APPS
@@ -116,3 +119,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ),
+}
