@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
+import { mapValues, get as _get } from 'lodash';
 
 import DefaultLayout from '../../components/layouts/default';
 import { SIGNIN_API_URL } from '../../common/constants/api';
+import { get } from 'https';
 
 
 class Signin extends Component {
@@ -40,8 +42,31 @@ class Signin extends Component {
     e.preventDefault();
     this.setState({error: ''});
 
-    const username = this.state.username;
     const url = SIGNIN_API_URL();
+
+    const data = mapValues({ ...this.state.form }, i => _get(i, 'value'));
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        const {token} = await response.json();
+
+        // TODO: Sign-in Here
+      } else {
+        const errorJson = await response.json();
+        let error = new Error(response.statusText);
+        error.response = response;
+        error.json = errorJson;
+        throw error;
+      }
+    } catch (error) {
+      this.setState({error: error.json});
+    }
   }
 
   render() {
