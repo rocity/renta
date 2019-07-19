@@ -17,8 +17,14 @@ export const signout = () => {
   Router.push('/auth/signin');
 };
 
-const getDisplayName = Component => Component.getDisplayName || Component.name || 'Component'
+const getDisplayName = Component => Component.getDisplayName || Component.name || 'Component';
 
+/**
+ * Protects the target component with token check for the user.
+ * Logs out the user if a token is not found.
+ *
+ * @param {*} WrappedComponent The target Component
+ */
 export const withAuthSync = WrappedComponent => (
   class extends Component {
     static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
