@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import DefaultHeader from '../includes/headers/default';
 
+import '../../sass/styles.scss';
+
 
 const DefaultLayout = props => (
   <div>
