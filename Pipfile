@@ -12,6 +12,8 @@ dj-database-url = "*"
 python-decouple = "*"
 psycopg2 = "*"
 django-cors-headers = "*"
+faker = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.7"
