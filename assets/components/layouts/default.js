@@ -10,7 +10,13 @@ const DefaultLayout = props => (
       <title>Renta Project</title>
     </Head>
     <DefaultHeader></DefaultHeader>
-    {props.children}
+    <div className="container">
+      <div className="row">
+        <div className="column column-75 column-offset-10">
+          {props.children}
+        </div>
+      </div>
+    </div>
   </div>
 )
 

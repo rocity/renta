@@ -12,6 +12,9 @@ const SignIn = () => (
         <label>Password</label>
         <input type="password" name="password" id="password"/>
       </fieldset>
+      <fieldset>
+        <button>Sign In</button>
+      </fieldset>
     </form>
   </DefaultLayout>
 );
