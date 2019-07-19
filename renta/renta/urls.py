@@ -24,7 +24,7 @@ router = DefaultRouter()
 
 apipatterns = [
     path('api/', include(router.urls)),
-    path('api/api-token-auth/', views.obtain_auth_token),
+    path('api/api-token-auth/', views.obtain_auth_token, name='api_token_auth'),
 ]
 
 urlpatterns = apipatterns + [
