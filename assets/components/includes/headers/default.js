@@ -10,6 +10,9 @@ const DefaultHeader = () => (
       <li>
         <Link href="/listings"><a>Listings</a></Link>
       </li>
+      <li>
+        <Link href="/auth/signin"><a>Sign In</a></Link>
+      </li>
     </ul>
 
     <style jsx>
