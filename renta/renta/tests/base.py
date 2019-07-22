@@ -16,20 +16,23 @@ class BaseRentaTestCase(APITestCase):
 
     password_string = 'password'
 
-    class setUp(self):
+    def setUp(self):
         self.client = APIClient()
 
         if self.base_url_name:
             # Set default url to "list"
             self.url = reverse(f'{self.base_url_name}-list')
 
-    def sign_in_as_user(self, user, password=self.password_string):
+    def sign_in_as_user(self, user, password=None):
         """
         Set user session into current test run.
 
         :param: user - The user instance
         :param: password - The user's password in plaintext
         """
+
+        if not password:
+            password = self.password_string
 
         self.client.credentials()
         credentials = {'username': user.email, 'password': password}

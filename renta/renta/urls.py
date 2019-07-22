@@ -19,8 +19,11 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
+from accounts.views import ProfileViewSet
+
 
 router = DefaultRouter()
+router.register(r'profiles', ProfileViewSet, base_name='profiles')
 
 apipatterns = [
     path('api/', include(router.urls)),
