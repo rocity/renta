@@ -47,6 +47,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'accounts.apps.AccountsConfig',
+    'listings.apps.ListingsConfig'
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + PROJECT_APPS
