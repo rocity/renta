@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions
 
 from .models import User
 from .serializers import ProfileSerializer
+from .permissions import CanManageProfile
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -11,4 +12,4 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, CanManageProfile, )

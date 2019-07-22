@@ -33,21 +33,21 @@ class ProfileViewTestCase(BaseRentaTestCase):
     def test_list_profiles_by_anon_fails(self):
         self.client.credentials()
 
-        response = self.client.get(self.url)
+        response = self.client.get(self.get_list_url())
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_list_profiles_by_auth_user_succeeds(self):
         self.sign_in_as_user(self.other_user)
 
-        response = self.client.get(self.url)
+        response = self.client.get(self.get_list_url())
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_list_profiles_by_admin_succeeds(self):
         self.sign_in_as_user(self.admin, password='password')
 
-        response = self.client.get(self.url)
+        response = self.client.get(self.get_list_url())
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -77,7 +77,7 @@ class ProfileViewTestCase(BaseRentaTestCase):
 
         response = self.client.patch(self.get_detail_url(self.profile_one.id), {'first_name': 'Joe'})
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_profile_by_non_owner_auth_user_fails(self):
         self.sign_in_as_user(self.other_user)
