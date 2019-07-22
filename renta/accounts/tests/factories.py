@@ -1,6 +1,7 @@
 import factory
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 
 from faker import Faker
 
@@ -16,6 +17,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     - email
     - first_name
     - last_name
+    - password (Defaults to 'password')
     """
 
     class Meta:
@@ -26,3 +28,4 @@ class UserFactory(factory.django.DjangoModelFactory):
     )
     first_name = factory.lazy_attribute(lambda o: fake.first_name())
     last_name = factory.lazy_attribute(lambda o: fake.last_name())
+    password = make_password('password')
