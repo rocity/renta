@@ -28,6 +28,8 @@ class ProfileViewTestCase(BaseRentaTestCase):
 
         self.other_user = UserFactory(email=fake.email())
 
+        self.own_profile_url = reverse(f'{self.base_url_name}-own')
+
         self.sign_in_as_user(self.user)
 
     def test_list_profiles_by_anon_fails(self):
@@ -129,13 +131,22 @@ class ProfileViewTestCase(BaseRentaTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_own_profile_by_anon_fails(self):
-        pass
+        self.client.credentials()
 
-    def test_get_own_profile_by_non_owner_fails(self):
-        pass
+        response = self.client.get(self.own_profile_url)
 
-    def test_get_own_profile_by_owner_succeeds(self):
-        pass
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_get_own_profile_by_admin_for_other_users_fail(self):
-        pass
+    def test_get_own_profile_by_auth_user_succeeds(self):
+        response = self.client.get(self.own_profile_url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json().get('id'), str(self.user.id))
+
+    def test_get_own_profile_by_admin_succeeds(self):
+        self.sign_in_as_user(self.admin)
+
+        response = self.client.get(self.own_profile_url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json().get('id'), str(self.admin.id))
