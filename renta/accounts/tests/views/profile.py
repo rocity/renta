@@ -128,3 +128,14 @@ class ProfileViewTestCase(BaseRentaTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+    def test_get_own_profile_by_anon_fails(self):
+        pass
+
+    def test_get_own_profile_by_non_owner_fails(self):
+        pass
+
+    def test_get_own_profile_by_owner_succeeds(self):
+        pass
+
+    def test_get_own_profile_by_admin_for_other_users_fail(self):
+        pass
