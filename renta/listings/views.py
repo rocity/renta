@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Listing
 from .serializers import ListingSerializer
+from .permissions import CanManageListing
 
 
 class ListingViewSet(ModelViewSet):
@@ -14,4 +15,4 @@ class ListingViewSet(ModelViewSet):
 
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny, CanManageListing, )

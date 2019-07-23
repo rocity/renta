@@ -44,6 +44,8 @@ class ListingViewTestCase(BaseRentaTestCase):
     def test_list_listings_by_admin_succeeds(self):
         self.sign_in_as_user(self.admin)
 
+        response = self.client.get(self.get_list_url())
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_listing_by_anon_succeeds(self):
@@ -60,6 +62,8 @@ class ListingViewTestCase(BaseRentaTestCase):
 
     def test_get_listing_by_admin_succeeds(self):
         self.sign_in_as_user(self.admin)
+
+        response = self.client.get(self.get_detail_url(self.listing_one.id))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -117,6 +121,7 @@ class ListingViewTestCase(BaseRentaTestCase):
     def test_delete_listing_by_owner_auth_user_succeeds(self):
         owner = UserFactory()
         listing = ListingFactory(user=owner)
+        self.sign_in_as_user(owner)
 
         response = self.client.delete(self.get_detail_url(listing.id))
 
