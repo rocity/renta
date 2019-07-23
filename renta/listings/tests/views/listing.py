@@ -2,8 +2,13 @@ from renta.tests.base import BaseRentaTestCase
 
 from rest_framework import status
 
+from listings.models import Listing
+# from listings.tests.factories import Listing
 
 from faker import Faker
+
+
+fake = Faker()
 
 
 class ListingViewTestCase(BaseRentaTestCase):
@@ -17,19 +22,31 @@ class ListingViewTestCase(BaseRentaTestCase):
         self.user = UserFactory(email=fake.email())
         self.admin = UserFactory(is_admin=True)
 
+        self.listing_one = List
+
         self.sign_in_as_user(self.user)
 
     def test_list_listings_by_anon_succeeds(self):
-        pass
+        self.client.credentials()
+
+        response = self.client.get(self.get_list_url())
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_list_listings_by_auth_user_succeeds(self):
-        pass
+        response = self.client.get(self.get_list_url())
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_list_listings_by_admin_succeeds(self):
-        pass
+        self.sign_in_as_user(self.admin)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_listing_by_anon_succeeds(self):
-        pass
+        self.client.credentials()
+
+        response = self.client.get(self.get_detail_url())
 
     def test_get_listing_by_auth_user_succeeds(self):
         pass
