@@ -1,8 +1,6 @@
 from django.urls import reverse
-from django.contrib.auth.hashers import make_password
 
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
 
 from renta.tests.base import BaseRentaTestCase
 from accounts.tests.factories import UserFactory
