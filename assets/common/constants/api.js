@@ -12,3 +12,7 @@ export const PROFILE_API_URL = () => `${API_DOMAIN}${PROFILE_API_PATH()}`;
 
 export const PROFILE_OWN_API_PATH = () => `${API_PATH}profiles/own/`;
 export const PROFILE_OWN_API_URL = () => `${API_DOMAIN}${PROFILE_OWN_API_PATH()}`;
+
+// Listings
+export const LISTINGS_API_PATH = () => `${API_PATH}listings/`;
+export const LISTINGS_API_URL = () => `${API_DOMAIN}${LISTINGS_API_PATH()}`;
