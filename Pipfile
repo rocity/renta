@@ -15,6 +15,7 @@ django-cors-headers = "*"
 faker = "*"
 factory-boy = "*"
 django-model-utils = "*"
+django-versatileimagefield = "*"
 
 [requires]
 python_version = "3.7"

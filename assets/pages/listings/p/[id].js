@@ -1,5 +1,6 @@
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
+import fetch from 'isomorphic-unfetch';
 
 import DefaultLayout from '../../../components/layouts/default';
 import { withAuthSync } from '../../../common/utils/auth';
