@@ -65,7 +65,7 @@ Index.getInitialProps = async function(context) {
   const {token} = nextCookie(context);
 
   const redirectOnError = () =>
-    typeof window !== undefined
+    typeof window !== 'undefined'
       ? Router.push('/auth/signin')
       : context.res.writeHead(302, { Location: '/auth/signin' }).end();
 
