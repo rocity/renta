@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from model_utils import Choices
+from versatileimagefield.fields import VersatileImageField
 
 from renta.models import BaseRentaModel
 
@@ -30,3 +31,17 @@ class Listing(BaseRentaModel):
 
     def __str__(self):
         return f'{self.user} - {self.title}'
+
+
+class ListingImage(BaseRentaModel):
+    """
+    ListingImage Model
+    """
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    image = VersatileImageField(
+        'Image',
+        upload_to='images/listingimage/',
+    )
+
+    def __str__(self):
+        return f'{self.listing.id} - {self.id}'
