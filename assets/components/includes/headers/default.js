@@ -6,9 +6,11 @@ import nextCookie from 'next-cookies';
 class DefaultHeader extends Component {
   render() {
     let authLink = <Link href="/auth/signin"><a>Sign In</a></Link>;
+    let createListingLink = null;
 
     if (this.props.isAuthed === true) {
       authLink = <Link href="/profile"><a>Profile</a></Link>;
+      createListingLink = <Link href="/listings/create"><a>Create Listing</a></Link>;
     }
     return (
       <header>
@@ -22,6 +24,9 @@ class DefaultHeader extends Component {
           </li>
           <li>
             {authLink}
+          </li>
+          <li>
+            {createListingLink}
           </li>
         </ul>
 

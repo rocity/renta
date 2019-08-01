@@ -75,22 +75,24 @@ class Signin extends Component {
         <h1>Sign In</h1>
         <form onSubmit={this.handleSubmit}>
           <fieldset>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              value={this.state.form.username.value}
-              onChange={this.handleChange} />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={this.state.form.password.value}
-              onChange={this.handleChange} />
+            <div className="row">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                value={this.state.form.username.value}
+                onChange={this.handleChange} />
+            </div>
+            <div className="row">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={this.state.form.password.value}
+                onChange={this.handleChange} />
+            </div>
           </fieldset>
           <fieldset>
             <button type="submit">Sign In</button>
