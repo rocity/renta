@@ -124,6 +124,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
 AUTH_USER_MODEL = 'accounts.User'
 
 # DRF
