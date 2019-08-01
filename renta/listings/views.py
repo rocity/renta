@@ -15,4 +15,4 @@ class ListingViewSet(ModelViewSet):
 
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-    permission_classes = (permissions.AllowAny, CanManageListing, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, CanManageListing, )

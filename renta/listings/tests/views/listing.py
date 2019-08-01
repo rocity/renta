@@ -27,7 +27,7 @@ class ListingViewTestCase(BaseRentaTestCase):
 
         self.listing_one = ListingFactory()
 
-        self.listing_update_data = { 'title': fake.color_name() }
+        self.listing_update_data = { 'title': fake.color_name(), 'images': [] }
         self.listing_valid_create_data = {
             'title': fake.color_name(),
             'description': fake.sentence(nb_words=10),
@@ -174,6 +174,10 @@ class ListingViewTestCase(BaseRentaTestCase):
         response = self.client.post(self.get_list_url(), self.listing_valid_create_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(
+            len(response.json().get('image_urls')),
+            len(self.listing_valid_create_data.get('images'))
+        )
 
     def test_create_listing_by_auth_user_with_invalid_data_fails(self):
         user = UserFactory()
@@ -184,14 +188,18 @@ class ListingViewTestCase(BaseRentaTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_create_listing_by_admin_valid_data_succeeds(self):
+    def test_create_listing_by_admin_with_valid_data_succeeds(self):
         self.sign_in_as_user(self.admin)
 
         response = self.client.post(self.get_list_url(), self.listing_valid_create_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(
+            len(response.json().get('image_urls')),
+            len(self.listing_valid_create_data.get('images'))
+        )
 
-    def test_create_listing_by_admin_valid_data_fails(self):
+    def test_create_listing_by_admin_with_invalid_data_fails(self):
         self.sign_in_as_user(self.admin)
 
         response = self.client.post(self.get_list_url(), {'title': 'Hello?'})
