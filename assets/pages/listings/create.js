@@ -16,7 +16,7 @@ class Create extends Component {
         title: { value: '' },
         description: { value: '' },
         price: { value: '' },
-        billing_frequency: { value: '' },
+        billing_frequency: { value: 'monthly' },
         location: { value: '' },
         location_coordinates: { value: '' }
       },
@@ -149,7 +149,7 @@ class Create extends Component {
             <div className="row">
               <div className={"form-control " + (this.state.error.location_coordinates ? 'invalid' : '')}>
                 <label htmlFor="location_coordiantes">Coordinates</label>
-                <span className="error">{this.state.error.location_coordiantes}</span>
+                <span className="error">{this.state.error.location_coordinates}</span>
                 <input
                   type="text"
                   name="location_coordinates"
