@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
@@ -11,9 +11,15 @@ import { LISTINGS_API_URL } from '../../../common/constants/api';
 
 export const Listing = (props) => {
   const {listing} = props;
+  const [files, setFiles] = useState([]);
   const dropzoneOptions = {
     accept: 'image/jpeg, image/png',
-    multiple: false
+    multiple: false,
+    onDrop: acceptedFiles => {
+      setFiles(acceptedFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })));
+    }
   }
 
   const {
@@ -24,12 +30,6 @@ export const Listing = (props) => {
     isDragReject,
     acceptedFiles
   } = useDropzone(dropzoneOptions);
-
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   // Dropzone Styles
   const baseStyle = {
@@ -78,15 +78,37 @@ export const Listing = (props) => {
 
   // End Dropzone Styles
 
+  let dropZoneElem = (
+    <div  {...getRootProps({ style })}>
+      <input {...getInputProps()} />
+      <p>Upload a new Photo</p>
+    </div>
+  )
+
+  if (acceptedFiles.length) {
+    dropZoneElem = (
+      <div className="image">
+        <img src={acceptedFiles[0].preview} alt={acceptedFiles[0].path} />
+        <style jsx>{`
+          .image {
+            width: 260px;
+            height: 260px;
+          }
+          img {
+            width: 100%;
+            height: auto;
+          }
+        `}</style>
+      </div>
+    )
+  }
+
   return (
     <DefaultLayout>
       <h1>Listing</h1>
       <div className="row">
         <div className="images">
-          <div  {...getRootProps({style})}>
-            <input {...getInputProps()} />
-            <p>Upload a new Photo</p>
-          </div>
+          {dropZoneElem}
         </div>
       </div>
       <div className="row">
