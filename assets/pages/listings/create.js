@@ -1,7 +1,8 @@
-import {Component} from 'react';
-import nextCookie from 'next-cookies';
-import {mapValues, get} from 'lodash';
 import fetch from 'isomorphic-unfetch';
+import Router from 'next/router';
+import nextCookie from 'next-cookies';
+import {Component} from 'react';
+import {mapValues, get} from 'lodash';
 
 import DefaultLayout from '../../components/layouts/default';
 import { LISTINGS_API_URL } from '../../common/constants/api';
@@ -61,8 +62,14 @@ class Create extends Component {
 
       if (response.ok) {
         // Clear form
-        // Show success message
         this.setState({success: true});
+        const data = await response.json();
+
+        if (typeof window !== 'undefined') {
+          Router.push(`/listings/p/${get(data, 'id')}`);
+        } else {
+          this.res.writeHead(302, { Location: `/listings/p/${get(data, 'id')}` }).end();
+        }
       } else {
         const errorJson = await response.json();
 
