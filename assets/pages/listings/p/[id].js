@@ -1,6 +1,8 @@
+import React, { useMemo } from 'react';
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
+import { useDropzone } from 'react-dropzone';
 
 import DefaultLayout from '../../../components/layouts/default';
 import { withAuthSync } from '../../../common/utils/auth';
@@ -9,12 +11,80 @@ import { LISTINGS_API_URL } from '../../../common/constants/api';
 
 export const Listing = (props) => {
   const {listing} = props;
+  const dropzoneOptions = {
+    accept: 'image/jpeg, image/png',
+    multiple: false
+  }
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+    acceptedFiles
+  } = useDropzone(dropzoneOptions);
+
+  const files = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  // Dropzone Styles
+  const baseStyle = {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: '#eeeeee',
+    borderStyle: 'dashed',
+    backgroundColor: '#fafafa',
+    color: '#bdbdbd',
+    outline: 'none',
+    transition: 'border .24s ease-in-out',
+    width: '260px',
+    height: '260px',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+  };
+
+  const activeStyle = {
+    borderColor: '#2196f3'
+  };
+
+  const acceptStyle = {
+    borderColor: '#00e676'
+  };
+
+  const rejectStyle = {
+    borderColor: '#ff1744'
+  };
+
+  const style = useMemo(() => ({
+    ...baseStyle,
+    ...(isDragActive ? activeStyle : {}),
+    ...(isDragAccept ? acceptStyle : {}),
+    ...(isDragReject ? rejectStyle : {})
+  }), [
+      isDragActive,
+      isDragReject
+    ]);
+
+  // End Dropzone Styles
+
   return (
     <DefaultLayout>
       <h1>Listing</h1>
       <div className="row">
         <div className="images">
-          <div className="image upload">
+          <div  {...getRootProps({style})}>
+            <input {...getInputProps()} />
             <p>Upload a new Photo</p>
           </div>
         </div>
@@ -25,22 +95,6 @@ export const Listing = (props) => {
         <small>{listing.location}</small>
         <p>{listing.description}</p>
       </div>
-      <style jsx>{`
-          .images .image {
-            width: 260px;
-            height: 260px;
-          }
-          .images .image.upload {
-            border: 3px dotted #333;
-            background-color: #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            align-items: center;
-          }
-        `}</style>
     </DefaultLayout>
   )
 }
