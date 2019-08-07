@@ -3,6 +3,7 @@ import nextCookie from 'next-cookies';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import { useDropzone } from 'react-dropzone';
+import {get} from 'lodash';
 
 import DefaultLayout from '../../../components/layouts/default';
 import { withAuthSync } from '../../../common/utils/auth';
@@ -77,13 +78,16 @@ export const Listing = (props) => {
     ]);
 
   // End Dropzone Styles
+  let dropZoneElem = null;
 
-  let dropZoneElem = (
-    <div  {...getRootProps({ style })}>
-      <input {...getInputProps()} />
-      <p>Upload a new Photo</p>
-    </div>
-  )
+  if (get(listing, 'is_owner')) {
+    dropZoneElem = (
+      <div  {...getRootProps({ style })}>
+        <input {...getInputProps()} />
+        <p>Upload a new Photo</p>
+      </div>
+    )
+  }
 
   if (acceptedFiles.length) {
     dropZoneElem = (
