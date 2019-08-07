@@ -17,6 +17,7 @@ const ListingLink = props => {
             <a>{listing.title}</a>
           </Link>
         </h2>
+        <small>{listing.owner}</small>
         <p>{listing.description}</p>
         <small>{listing.location}</small>
         <small>{listing.price}</small>

@@ -113,6 +113,7 @@ export const Listing = (props) => {
       </div>
       <div className="row">
         <h2>{listing.title}</h2>
+        <small>{listing.owner}</small>
         <h4>{listing.price}</h4>
         <small>{listing.location}</small>
         <p>{listing.description}</p>
