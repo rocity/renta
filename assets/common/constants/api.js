@@ -16,3 +16,7 @@ export const PROFILE_OWN_API_URL = () => `${API_DOMAIN}${PROFILE_OWN_API_PATH()}
 // Listings
 export const LISTINGS_API_PATH = (id=null) => `${API_PATH}listings/${id ? `${id}/` : ''}`;
 export const LISTINGS_API_URL = (id=null) => `${API_DOMAIN}${LISTINGS_API_PATH(id)}`;
+
+// Listing Images
+export const LISTING_IMAGES_API_PATH = (id=null) => `${API_PATH}listingimages/${id ? `${id}/` : ''}`;
+export const LISTING_IMAGES_API_URL = (id=null) => `${API_DOMAIN}${LISTING_IMAGES_API_PATH(id)}`;

@@ -36,7 +36,11 @@ class ListingSerializer(serializers.ModelSerializer):
                   'location_coordinates', 'user', 'image_urls', 'owner', 'is_owner', )
 
     def get_image_urls(self, obj):
-        return ListingImageSerializer(instance=obj.listingimage_set.all(), many=True).data
+        return ListingImageSerializer(
+            context=self.context,
+            instance=obj.listingimage_set.all(),
+            many=True
+        ).data
 
     def get_owner(self, obj):
         return obj.user.get_full_name()

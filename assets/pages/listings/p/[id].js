@@ -7,11 +7,12 @@ import {get} from 'lodash';
 
 import DefaultLayout from '../../../components/layouts/default';
 import { withAuthSync } from '../../../common/utils/auth';
-import { LISTINGS_API_URL } from '../../../common/constants/api';
+import { LISTINGS_API_URL, LISTING_IMAGES_API_URL } from '../../../common/constants/api';
 
 
 export const Listing = (props) => {
-  const {listing} = props;
+  // Declarations
+  const {listing, token} = props;
   const [files, setFiles] = useState([]);
   const dropzoneOptions = {
     accept: 'image/jpeg, image/png',
@@ -32,11 +33,22 @@ export const Listing = (props) => {
     acceptedFiles
   } = useDropzone(dropzoneOptions);
 
-
+  // Events
   const handleUpload = async function (e) {
+    const url = LISTING_IMAGES_API_URL();
+
+    let data = new FormData()
+
+    data.append('listing', listing.id);
+    data.append('image', acceptedFiles[0]);
+
     try {
-      const response = await fetch('https://google.com', {
-        method: 'GET',
+      const response = await fetch(url, {
+        method: 'POST',
+        body: data,
+        headers: {
+          Authorization: token
+        }
       });
       if (response.ok) {
         return await response.json();
