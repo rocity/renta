@@ -8,9 +8,6 @@ from accounts.tests.factories import UserFactory
 
 from faker import Faker
 
-from io import BytesIO
-from PIL import Image
-
 fake = Faker()
 
 
@@ -38,14 +35,6 @@ class ListingViewTestCase(BaseRentaTestCase):
         }
 
         self.sign_in_as_user(self.user)
-
-    def create_test_image(self):
-        file = BytesIO()
-        image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
-        image.save(file, 'png')
-        file.name = 'test.png'
-        file.seek(0)
-        return file
 
     def test_list_listings_by_anon_succeeds(self):
         self.client.credentials()

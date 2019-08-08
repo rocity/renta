@@ -5,6 +5,9 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
+from io import BytesIO
+from PIL import Image
+
 
 class BaseRentaTestCase(APITestCase):
     """
@@ -69,3 +72,14 @@ class BaseRentaTestCase(APITestCase):
             base_url_name = self.base_url_name
 
         return reverse(f'{base_url_name}-list')
+
+    def create_test_image(self):
+        """
+        Creates an image instance
+        """
+        file = BytesIO()
+        image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
+        image.save(file, 'png')
+        file.name = 'test.png'
+        file.seek(0)
+        return file
