@@ -22,12 +22,13 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
 from accounts.views import ProfileViewSet
-from listings.views import ListingViewSet
+from listings.views import ListingViewSet, ListingImageViewSet
 
 
 router = DefaultRouter()
 router.register(r'profiles', ProfileViewSet, base_name='profiles')
 router.register(r'listings', ListingViewSet, base_name='listings')
+router.register(r'listingimages', ListingImageViewSet, base_name='listingimages')
 
 apipatterns = [
     path('api/', include(router.urls)),

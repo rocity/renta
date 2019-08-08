@@ -14,6 +14,11 @@ class ListingImageSerializer(serializers.ModelSerializer):
         model = ListingImage
         fields = ('id', 'listing', 'image', )
 
+    def validate_listing(self, value):
+        user = self.context.get('request').user
+        if value and not user.is_staff and user != value.user:
+            raise serializers.ValidationError('You are not the owner of this listing.')
+        return value
 
 class ListingSerializer(serializers.ModelSerializer):
     """
