@@ -32,6 +32,20 @@ export const Listing = (props) => {
     acceptedFiles
   } = useDropzone(dropzoneOptions);
 
+
+  const handleUpload = async function (e) {
+    try {
+      const response = await fetch('https://google.com', {
+        method: 'GET',
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.log(error, 'OOPS')
+    }
+  }
+
   // Dropzone Styles
   const baseStyle = {
     flex: 1,
@@ -82,7 +96,7 @@ export const Listing = (props) => {
 
   if (get(listing, 'is_owner')) {
     dropZoneElem = (
-      <div  {...getRootProps({ style })}>
+      <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>Upload a new Photo</p>
       </div>
@@ -91,9 +105,10 @@ export const Listing = (props) => {
 
   if (acceptedFiles.length) {
     dropZoneElem = (
-      <div className="image">
-        <img src={acceptedFiles[0].preview} alt={acceptedFiles[0].path} />
-        <style jsx>{`
+      <div>
+        <div className="image">
+          <img src={acceptedFiles[0].preview} alt={acceptedFiles[0].path} />
+          <style jsx>{`
           .image {
             width: 260px;
             height: 260px;
@@ -103,6 +118,8 @@ export const Listing = (props) => {
             height: auto;
           }
         `}</style>
+        </div>
+        <button onClick={handleUpload} className="button">Upload Image</button>
       </div>
     )
   }
