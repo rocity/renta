@@ -9,11 +9,34 @@ import DefaultLayout from '../../../components/layouts/default';
 import { withAuthSync } from '../../../common/utils/auth';
 import { LISTINGS_API_URL, LISTING_IMAGES_API_URL } from '../../../common/constants/api';
 
+const ListingImage = (props) => {
+  return (
+    <div>
+      <div className="image">
+        <img src={props.src} alt={props.alt} />
+        <style jsx>{`
+          .image {
+            width: 260px;
+            height: 260px;
+            display: 'inline-block'
+          }
+          img {
+            width: 100%;
+            height: auto;
+          }
+        `}</style>
+      </div>
+    </div>
+  )
+}
+
 
 export const Listing = (props) => {
   // Declarations
   const {listing, token} = props;
   const [files, setFiles] = useState([]);
+  const [listingObj, setListingObj] = useState({});
+
   const dropzoneOptions = {
     accept: 'image/jpeg, image/png',
     multiple: false,
@@ -37,7 +60,7 @@ export const Listing = (props) => {
   const handleUpload = async function (e) {
     const url = LISTING_IMAGES_API_URL();
 
-    let data = new FormData()
+    let data = new FormData();
 
     data.append('listing', listing.id);
     data.append('image', acceptedFiles[0]);
@@ -51,10 +74,19 @@ export const Listing = (props) => {
         }
       });
       if (response.ok) {
-        return await response.json();
+        const imageData = await response.json();
+
+        // Update listing with new unage
+        listing.image_urls.push(imageData);
+        setListingObj(listing);
+
+        // Reset accepted files
+        setFiles([]);
+
+        return imageData;
       }
     } catch (error) {
-      console.log(error, 'OOPS')
+      // Upload error.
     }
   }
 
@@ -118,19 +150,7 @@ export const Listing = (props) => {
   if (acceptedFiles.length) {
     dropZoneElem = (
       <div>
-        <div className="image">
-          <img src={acceptedFiles[0].preview} alt={acceptedFiles[0].path} />
-          <style jsx>{`
-          .image {
-            width: 260px;
-            height: 260px;
-          }
-          img {
-            width: 100%;
-            height: auto;
-          }
-        `}</style>
-        </div>
+        <ListingImage src={acceptedFiles[0].preview} alt={acceptedFiles[0].path} />
         <button onClick={handleUpload} className="button">Upload Image</button>
       </div>
     )
@@ -142,6 +162,11 @@ export const Listing = (props) => {
       <div className="row">
         <div className="images">
           {dropZoneElem}
+          {listing.image_urls.map(image => (
+            <div className="image-wrap" key={image.id}>
+              <ListingImage src={image.image} alt={image.id} />
+            </div>
+          ))}
         </div>
       </div>
       <div className="row">
@@ -151,6 +176,12 @@ export const Listing = (props) => {
         <small>{listing.location}</small>
         <p>{listing.description}</p>
       </div>
+      <style jsx>{`
+        .image-wrap {
+          display: inline-block;
+          padding: 8px;
+        }
+        `}</style>
     </DefaultLayout>
   )
 }
