@@ -20,8 +20,26 @@ class SignUp extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {}
-  async handleSubmit(e) {}
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    this.setState({
+      form: {
+        ...this.state.form,
+        [name]: {
+          ...this.state.form[name],
+          value
+        }
+      }
+    });
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ error: '' });
+  }
 
   render() {
     return (
