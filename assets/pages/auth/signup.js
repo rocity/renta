@@ -1,5 +1,9 @@
 import {Component} from 'react';
+import fetch from 'isomorphic-unfetch';
+import { mapValues, get } from 'lodash';
+
 import DefaultLayout from '../../components/layouts/default';
+import { SIGNUP_API_URL } from '../../common/constants/api';
 
 class SignUp extends Component {
   constructor(props) {
@@ -39,6 +43,29 @@ class SignUp extends Component {
     e.preventDefault();
 
     this.setState({ error: '' });
+
+    const url = SIGNUP_API_URL();
+    const data = mapValues({ ...this.state.form }, i => get(i, 'value'));
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        // Show success message
+      } else {
+        const errorJson = await response.json();
+        let error = new Error(response.statusText);
+        error.response = response;
+        error.json = errorJson;
+        throw error;
+      }
+    } catch (error) {
+      this.setState({ error: error.json });
+    }
   }
 
   render() {
