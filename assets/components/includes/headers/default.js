@@ -17,6 +17,12 @@ class DefaultHeader extends Component {
     return (
       <header>
         <h2>Header</h2>
+        <form>
+          <fieldset>
+            <input type="text" />
+            <button>Search</button>
+          </fieldset>
+        </form>
         <ul>
           <li>
             <Link href="/"><a>Home</a></Link>
