@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
-from accounts.views import ProfileViewSet
+from accounts.views import ProfileViewSet, SignupView
 from listings.views import ListingViewSet, ListingImageViewSet
 
 
@@ -33,6 +33,7 @@ router.register(r'listingimages', ListingImageViewSet, base_name='listingimages'
 apipatterns = [
     path('api/', include(router.urls)),
     path('api/api-token-auth/', views.obtain_auth_token, name='api_token_auth'),
+    path('api/signup/', SignupView.as_view(), name='signup')
 ]
 
 if settings.DEBUG:

@@ -17,3 +17,16 @@ class CanManageProfile(permissions.BasePermission):
             return request.user.is_staff
 
         return obj == request.user or request.user.is_staff
+
+
+class CanSignUp(permissions.BasePermission):
+    """
+    Signup View Perms
+
+    - Only anon users can access the signup view
+    """
+
+    def has_permission(self, request, view):
+        if request.user.is_authenticated:
+            return False
+        return True

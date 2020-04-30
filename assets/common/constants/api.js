@@ -6,6 +6,9 @@ export const API_PATH = process.env.API_PATH ? process.env.API_PATH : 'api/';
 export const SIGNIN_API_PATH = () => `${API_PATH}api-token-auth/`;
 export const SIGNIN_API_URL = () => `${API_DOMAIN}${SIGNIN_API_PATH()}`;
 
+export const SIGNUP_API_PATH = () => `${API_PATH}signup/`;
+export const SIGNUP_API_URL = () => `${API_DOMAIN}${SIGNUP_API_PATH()}`;
+
 // Profile
 export const PROFILE_API_PATH = () => `${API_PATH}profiles/`;
 export const PROFILE_API_URL = () => `${API_DOMAIN}${PROFILE_API_PATH()}`;
